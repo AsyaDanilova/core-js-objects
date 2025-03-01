@@ -114,8 +114,20 @@ function makeImmutable(/* obj */) {
  *    makeWord({ a: [0, 1], b: [2, 3], c: [4, 5] }) => 'aabbcc'
  *    makeWord({ H:[0], e: [1], l: [2, 3, 8], o: [4, 6], W:[5], r:[7], d:[9]}) => 'HelloWorld'
  */
-function makeWord(/* lettersObject */) {
-  throw new Error('Not implemented');
+function makeWord(lettersObject) {
+  const indexes = Object.values(lettersObject).flat().sort();
+  const wordLength = indexes[indexes.length - 1];
+  let resultWord = new Array(wordLength).fill('');
+  Object.entries(lettersObject).forEach(([letter, positions]) => {
+    positions.forEach((pos) => {
+      resultWord = [
+        ...resultWord.slice(0, pos),
+        letter,
+        ...resultWord.slice(pos + 1),
+      ];
+    });
+  });
+  return resultWord.join('');
 }
 
 /**
@@ -149,8 +161,12 @@ function sellTickets(/* queue */) {
  *    console.log(r.height);      // => 20
  *    console.log(r.getArea());   // => 200
  */
-function Rectangle(/* width, height */) {
-  throw new Error('Not implemented');
+function Rectangle(width, height) {
+  this.width = width;
+  this.height = height;
+  this.getArea = function f() {
+    return this.width * this.height;
+  };
 }
 
 /**
